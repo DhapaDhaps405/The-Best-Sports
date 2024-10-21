@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Checkout</title>
+    <style>
+        .check-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        .summary-item {
+            font-weight: bold;
+        }
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0990e6;
+        }
+        .check-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #0990e6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .check-btn:hover
+        {
+            background-color: #0991e6a5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p style=" background-color: #0990e6; padding: 10px; margin-top: 0%; text-align: center; font-weight: 600; ">Welcome to The Best Sports: Where Passion Meets Performance</p>
+
+    
+    <div class="beside">
+        <div>
+            <img style="height: 100px; border-radius: 50px; margin-top: -15px;" src="Logo.png">
+
+        </div>
+
+        <div>
+            <a class="heading" href="Home.html" style="text-decoration: underline;">HOME</a>
+            <a class="heading" href="About Us.html" style="font-weight: lighter; color: #737373;">ABOUT US</a>
+            <a class="heading" href="Login.html" style="font-weight: lighter; color: #737373;">LOGOUT</a>
+        </div>
+
+    </div>
+
+
+    <div class="check-container" style="margin-top:10%;">
+        <h2>Checkout</h2>
+        <div class="summary">
+            <span>Subtotal:</span>
+            <span id="subtotal">$0.00</span>
+        </div>
+        <div class="summary">
+            <span>Discount:</span>
+            <span id="discount">-$0.00</span>
+        </div>
+        <div class="summary">
+            <span>Tax (5%):</span>
+            <span id="tax">$0.00</span>
+        </div>
+        <div class="summary total">
+            <span>Total:</span>
+            <span id="total">$0.00</span>
+        </div>
+        <button class="check-btn" id="checkoutBtn">Complete Purchase</button>
+    </div>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || []; // Retrieve cart from local storage
+        let totalAmount = 0;
+        let discount = 0; // Set discount amount here
+        const taxRate = 0.05; // 5% tax rate
+
+        function calculateTotals() {
+            // Calculate subtotal
+            totalAmount = cart.reduce((acc, product) => acc + product.price, 0);
+            const tax = totalAmount * taxRate;
+            const total = totalAmount - discount + tax;
+
+            // Update the UI
+            document.getElementById('subtotal').innerText = `$${totalAmount.toFixed(2)}`;
+            document.getElementById('discount').innerText = `-$${discount.toFixed(2)}`;
+            document.getElementById('tax').innerText = `$${tax.toFixed(2)}`;
+            document.getElementById('total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        // Call the function to calculate totals
+        calculateTotals();
+
+        // Add functionality for the complete purchase button
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            alert('Thank you for your purchase!');
+            localStorage.removeItem('cart'); // Clear cart after purchase
+            window.location.href = 'Home.html'; // Redirect to home page after purchase
+            // Here you can add functionality to handle payment processing
+        });
+
+        // Update the cart count on the cart icon if needed
+        const cartCount = document.getElementById('count');
+        cartCount.innerText = cart.length; // Assuming the count element exists
+
+        document.getElementById('completePurchase').addEventListener('click', () => {
+            alert('Thank you for your purchase!');
+            localStorage.removeItem('cart'); // Clear cart
+            window.location.href = 'Home.html'; // Redirect to home page
+        });
+    </script>
+</body>
+</html>
